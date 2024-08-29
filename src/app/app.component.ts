@@ -39,12 +39,19 @@ export class AppComponent {
           var identEndIndex: number = this.strEnteredText.indexOf(ident, 3);
 
           if (identEndIndex > 0) {
-            console.log("full string for ident " + ident + " was found: " + this.strEnteredText);
+            this.getObjectOfBarcode(ident, this.strEnteredText);
+            this.strEnteredText = "";
           }
 
         }
       }
     }
+  }
+
+  getObjectOfBarcode(ident: string, barcode: string) {
+    
+    console.log("full string for ident " + ident + " was found: " + barcode);
+
   }
 }
  
