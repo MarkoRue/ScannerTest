@@ -58,65 +58,44 @@ export class AppComponent {
 
   sendUdiCode() {
     console.log("dispatching event");
-
-    this.sendChar('U', 'KeyU');
-    this.sendChar('D', 'KeyD');
-    this.sendChar('I', 'KeyI');
-    this.sendChar(';', ';');
-
-    this.sendChar('0', '0');
-    this.sendChar('4', '4');
-    this.sendChar('0', '0');
-    this.sendChar('5', '5');
-    this.sendChar('2', '2');
-    this.sendChar('9', '9');
-    this.sendChar('1', '1');
-    this.sendChar('9', '9');
-    this.sendChar('0', '0');
-    this.sendChar('4', '4');
-    this.sendChar('3', '3');
-    this.sendChar('9', '9');
-    this.sendChar('1', '1');
-    this.sendChar('9', '9');
-    this.sendChar(';', ';');
-
-    this.sendChar('2', '2');
-    this.sendChar('0', '0');
-    this.sendChar('2', '2');
-    this.sendChar('3', '3');
-    this.sendChar('0', '0');
-    this.sendChar('2', '2');
-    this.sendChar('2', '2');
-    this.sendChar('5', '5');
-    this.sendChar(';', ';');
-
-    this.sendChar('2', '2');
-    this.sendChar('4', '4');
-    this.sendChar('.', '.');
-    this.sendChar('0', '0');
-    this.sendChar('2', '2');
-    this.sendChar('.', '.');
-    this.sendChar('2', '2');
-    this.sendChar('0', '0');
-    this.sendChar('2', '2');
-    this.sendChar('8', '8');
-    this.sendChar(';', ';');
-
-    this.sendChar(';', ';');
-
-    this.sendChar('U', 'KeyU');
-    this.sendChar('D', 'KeyD');
-    this.sendChar('I', 'KeyI');
-    this.sendChar(';', ';');
-
+    
     //UDI;04052919043919;20230225;24.02.2028;;UDI;
+    this.sendUdiTestString("UDI;04052919043919;20230225;24.02.2028;;UDI;");
 
   }
 
-  sendChar(key:string, code:string) {
+  sendChar(char: string) {
+    if (this.isLetter(char)) {
+      // Letter
+      this.sendKey(char, 'key' + char);
+    } else {
+      // not a Letter
+      this.sendKey(char, char);
+    }
+  }
+
+  isLetter(str: string) {
+    return str.length === 1 && str.match(/[a-z]/i);
+  }
+
+  sendKey(key:string, code:string) {
     event = new KeyboardEvent('keypress', {key: key, code: code, which: 1, keyCode: 1});
     document.dispatchEvent(event);
   }
+
+  sendUdiTestString(myString: string) {
+    type CharIterator = (str: string) => void;
+
+    const iterateOverCharacters: CharIterator = (str) => {
+        for (let i = 0; i < str.length; i++) {
+            const char: string = str[i];
+            this.sendChar(char);
+            console.log(char);
+        }
+    };
+
+    iterateOverCharacters(myString);
+  }
 }
- 
+
 
